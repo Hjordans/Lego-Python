@@ -16,11 +16,39 @@ gyro = GyroSensor(Port.S2)
 # The wheel diameter is 54 mm and the axle track is 132 mm.
 robot = DriveBase(motor_left, motor_right, wheel_diameter = 54, axle_track = 132)
 
-# Write your program here.
-gyro.reset_angle(0)
-while robot.distance() <= 1000:
-    correction = (0 -gyro.angle()) * 2
-    robot.drive(200, correction)
-robot.stop()
-motor_left.brake()
-motor_right.brake()
+# This are the definitions.
+def moveDistanceInMMforward(distance):
+ robot.straight(distance)
+
+def moveDistanceInMMbackward(distance):
+    moveDistanceIn(-1*distance)
+
+def moveDistanceIn(distance):
+    robot.straight(distance)
+
+def setting ():
+    robot.settings(250)
+
+def fullStop():
+    robot.stop()
+    motor_left.brake()
+    motor_right.brake()
+
+def turnAngleLeft(angle):
+    turnAngle(-1*angle)
+
+def turnAngleRight(angle):
+    turnAngle(angle)
+
+def turnAngle(angle):
+    robot.turn(angle)
+
+# Here is the programm.
+setting()
+moveDistanceInMMforward(500)
+turnAngleRight(180)
+moveDistanceInMMforward(500)
+
+
+print(gyro.angle())
+print(robot.distance())
