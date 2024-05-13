@@ -17,34 +17,53 @@ gyro = GyroSensor(Port.S2)
 robot = DriveBase(motor_left, motor_right, wheel_diameter = 54, axle_track = 132)
 
 # This are the definitions.
+# These are the forward and backward settings.
 def moveDistanceInMMforward(distance):
- robot.straight(distance)
+ moveDistanceIn(distance)
+ fullStop()
 
 def moveDistanceInMMbackward(distance):
     moveDistanceIn(-1*distance)
+    fullStop()
 
 def moveDistanceIn(distance):
     robot.straight(distance)
 
-def setting ():
-    robot.settings(250)
-
+# This stops the Robot.
 def fullStop():
     robot.stop()
     motor_left.brake()
     motor_right.brake()
 
+# Here are the speed settings.
+def setting(speed):
+    robot.settings(speed)
+
+# The angles settings for turning.
 def turnAngleLeft(angle):
     turnAngle(-1*angle)
+    gyroCorrection()
 
 def turnAngleRight(angle):
     turnAngle(angle)
+    gyroCorrection()
 
 def turnAngle(angle):
     robot.turn(angle)
 
+def gyroCorrection(turnAngleLeft, turnAngleRight):
+    if turnAngleLeft() > 0:
+        gyroCorrection - turnAngleLeft()
+        gyroReset()
+    else:
+        gyroCorrection - turnAngleRight()
+        gyroReset()
+
+def gyroReset():
+    gyro.reset_angle(0)
+
 # Here is the programm.
-setting()
+setting(150)
 moveDistanceInMMforward(500)
 turnAngleRight(180)
 moveDistanceInMMforward(500)
