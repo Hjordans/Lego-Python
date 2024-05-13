@@ -17,57 +17,45 @@ gyro = GyroSensor(Port.S2)
 robot = DriveBase(motor_left, motor_right, wheel_diameter = 54, axle_track = 132)
 
 # This are the definitions.
-# These are the forward and backward settings.
-def moveDistanceInMMforward(distance):
- moveDistanceIn(distance)
- fullStop()
+# Resets the Gyro Sensor.
+def gyroReset():
+    gyro.reset_angle(0)
+    while True:
+        if gyro.angle() == 0:
+            break
+    while True:
+        if gyro.speed() == 0:
+            break
 
-def moveDistanceInMMbackward(distance):
-    moveDistanceIn(-1*distance)
-    fullStop()
+# Drive forward or backward.
+def gyroStraight(distance, speed):
+    target = gyro.angle()
+    gain = 0
+    robot.reset()
 
-def moveDistanceIn(distance):
-    robot.straight(distance)
+    while robot.distance() < distance:
+        correction = target - gyro.angle()
+        turn_power = correction * gain
 
-# This stops the Robot.
-def fullStop():
+        robot.drive(speed, turn_power)
     robot.stop()
     motor_left.brake()
     motor_right.brake()
 
-# Here are the speed settings.
-def setting(speed):
-    robot.settings(speed)
+# Turn right or left.
+def gyroTurn(degrees):
+    gyroReset()
 
-# The angles settings for turning.
-def turnAngleLeft(angle):
-    turnAngle(-1*angle)
-    gyroCorrection()
-
-def turnAngleRight(angle):
-    turnAngle(angle)
-    gyroCorrection()
-
-def turnAngle(angle):
-    robot.turn(angle)
-
-def gyroCorrection(turnAngleLeft, turnAngleRight):
-    if turnAngleLeft() > 0:
-        gyroCorrection - turnAngleLeft()
-        gyroReset()
-    else:
-        gyroCorrection - turnAngleRight()
-        gyroReset()
-
-def gyroReset():
-    gyro.reset_angle(0)
+    robot.turn(degrees)
+    robot.stop()
 
 # Here is the programm.
-setting(150)
-moveDistanceInMMforward(500)
-turnAngleRight(180)
-moveDistanceInMMforward(500)
+gyroStraight(500, 100)
+gyroTurn(90)
+gyroStraight(500, 100)
+gyroTurn(90)
+gyroStraight(500, 100)
+gyroTurn(90)
+gyroStraight(500, 100)
+gyroTurn(90)
 
-
-print(gyro.angle())
-print(robot.distance())
