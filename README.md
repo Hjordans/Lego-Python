@@ -17,6 +17,9 @@ Als Erstes habe ich mir ein Video angeguckt zur Programmierung des Roboters und 
 Mein jetziges großes Ziel ist, das so zu programmieren, dass es einer Schwarzen Linie folgt.
 
 ### Mein erstes Programm
-Ich habe mein erstes richtiges Programm geschrieben, der Roboter kann jetzt schon geradeaus gehen und sich drehen.  
-Es gibt aber auch ein Fehler, den ich noch ausbügeln muss, denn wenn er sich dreht, kann es sein, dass die Werte falsch sind
-zum Beispiel statt einer 180 Grad Drehung macht er eine 176 Grad Drehung und fährt deshalb nicht 100 % grade.
+Die erste Version von dem Roboter ist fertig.  
+Er kann mit dem Python Code vorwärts, rückwärts gehen und sich drehen.  
+Er dreht sich jetzt auch ohne großen Genauigkeitsverlust.
+
+### Umstellung zu Java
+
